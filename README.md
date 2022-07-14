@@ -1,6 +1,6 @@
 # Flysystem Adapter for BunnyCDN Storage with SFTP
 
-[![Test V1](https://github.com/tinect/bunnycdn-sftp-flysystem-adapter/actions/workflows/test_v1.yml/badge.svg)](https://github.com/tinect/bunnycdn-s3-flysystem-adapter/actions/workflows/test_v1.yml)
+[![Test V1](https://github.com/tinect/bunnycdn-sftp-flysystem-adapter/actions/workflows/test_v1.yml/badge.svg)](https://github.com/tinect/bunnycdn-sftp-flysystem-adapter/actions/workflows/test_v1.yml)
 
 This adapter supports Flysystem with version 1 for BunnyCDN.  
 
