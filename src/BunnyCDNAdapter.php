@@ -27,16 +27,14 @@ class BunnyCDNAdapter extends SftpAdapter
             'password' => $apiKey,
             'timeout' => 10,
         ]);
-
-        if (!$this->has($this->subfolder)) {
-            $this->createDir($this->subfolder, new Config());
-        }
-
-        $this->setRoot($this->subfolder);
-        $this->setConnectionRoot();
     }
 
-    public function rename($path, $newpath)
+    public function connect() {
+        parent::connect();
+        $this->setSubfolder();
+    }
+
+    public function rename($path, $newpath): bool
     {
         $this->copy($path, $newpath);
 
@@ -54,5 +52,19 @@ class BunnyCDNAdapter extends SftpAdapter
         } catch (\LogicException $e) {
             return true;
         }
+    }
+
+    private function setSubfolder(): void
+    {
+        if ($this->subfolder === '') {
+            return;
+        }
+
+        if (!$this->has($this->subfolder)) {
+            $this->createDir($this->subfolder, new Config());
+        }
+
+        $this->setRoot($this->subfolder);
+        $this->setConnectionRoot();
     }
 }
