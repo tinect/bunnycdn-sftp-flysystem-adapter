@@ -297,13 +297,22 @@ class BunnyCDNAdapterTest extends TestCase
     public function testTestsFlysystemCompatibility()
     {
         $adapter = $this->adapter();
-        $filesystem = new Filesystem($adapter);
-        $dirName = 'test' . bin2hex(random_bytes(10));
-        self::assertFalse($filesystem->has($dirName));
-        self::assertTrue($filesystem->createDir($dirName));
-        self::assertTrue($filesystem->has($dirName));
-        self::assertTrue($filesystem->deleteDir($dirName));
-        self::assertFalse($filesystem->has($dirName));
+        $filesystem = new Filesystem($adapter, ['visibility' => 'whatever']);
+        $randomString = 'test' . bin2hex(random_bytes(10));
+
+        self::assertFalse($filesystem->has($randomString));
+        self::assertTrue($filesystem->createDir($randomString));
+        self::assertTrue($filesystem->has($randomString));
+        self::assertTrue($filesystem->deleteDir($randomString));
+        self::assertFalse($filesystem->has($randomString));
+
+        self::assertTrue(
+            $filesystem->write('testing/' . $randomString . '.txt', self::TEST_FILE_CONTENTS)
+        );
+        self::assertTrue(
+            $filesystem->delete('testing/' . $randomString . '.txt')
+        );
+
     }
 
     /**

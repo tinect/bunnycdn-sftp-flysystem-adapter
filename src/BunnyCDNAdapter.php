@@ -47,8 +47,12 @@ class BunnyCDNAdapter extends SftpAdapter
      * While SftpAdapter is ALWAYS setting visiblity there are many errors thrown.
      * We should just ignore them!
      */
-    public function setVisibility($path, $visibility): array
+    public function upload($path, $contents, Config $config): bool
     {
-        return [];
+        try {
+            return parent::upload($path, $contents, $config);
+        } catch (\LogicException $e) {
+            return true;
+        }
     }
 }
