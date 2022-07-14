@@ -19,7 +19,7 @@ class BunnyCDNAdapterTest extends FilesystemAdapterTestCase
         self::createFilesystemAdapter('')->deleteDirectory($_SERVER['subfolder']);
     }
 
-    public function testFileProcesses(): void
+    public function test_file_processes(): void
     {
         $adapter = $this->adapter();
 
@@ -52,7 +52,7 @@ class BunnyCDNAdapterTest extends FilesystemAdapterTestCase
     /**
      * @test
      */
-    public function writingAFileWithAnEmptyStream(): void
+    public function writing_a_file_with_an_empty_stream(): void
     {
         static::markTestSkipped('BunnyCDN can not write empty streams? oO');
     }
@@ -60,7 +60,7 @@ class BunnyCDNAdapterTest extends FilesystemAdapterTestCase
     /**
      * @test
      */
-    public function settingVisibility(): void
+    public function setting_visibility(): void
     {
         static::markTestSkipped('BunnyCDN does not support visibility');
     }
@@ -69,32 +69,9 @@ class BunnyCDNAdapterTest extends FilesystemAdapterTestCase
      * @test
      * We removed the check of visibility, BunnyCDN bunnyCDN does not support visibility
      */
-    public function copyingAFile(): void
+    public function copying_a_file(): void
     {
-        $this->runScenario(function (): void {
-            $adapter = $this->adapter();
-            $adapter->write(
-                'source.txt',
-                'contents to be copied',
-                new Config([Config::OPTION_VISIBILITY => Visibility::PUBLIC])
-            );
-
-            $adapter->copy('source.txt', 'destination.txt', new Config());
-
-            $this->assertTrue($adapter->fileExists('source.txt'));
-            $this->assertTrue($adapter->fileExists('destination.txt'));
-            //$this->assertEquals(Visibility::PUBLIC, $adapter->visibility('destination.txt')->visibility());
-            $this->assertEquals('contents to be copied', $adapter->read('destination.txt'));
-        });
-    }
-
-    /**
-     * @test
-     * We removed the check of visibility, BunnyCDN bunnyCDN does not support visibility
-     */
-    public function copyingAFileAgain(): void
-    {
-        $this->runScenario(function (): void {
+        $this->runScenario(function () {
             $adapter = $this->adapter();
             $adapter->write(
                 'source.txt',
@@ -115,9 +92,32 @@ class BunnyCDNAdapterTest extends FilesystemAdapterTestCase
      * @test
      * We removed the check of visibility, BunnyCDN bunnyCDN does not support visibility
      */
-    public function movingAFile(): void
+    public function copying_a_file_again(): void
     {
-        $this->runScenario(function (): void {
+        $this->runScenario(function () {
+            $adapter = $this->adapter();
+            $adapter->write(
+                'source.txt',
+                'contents to be copied',
+                new Config([Config::OPTION_VISIBILITY => Visibility::PUBLIC])
+            );
+
+            $adapter->copy('source.txt', 'destination.txt', new Config());
+
+            $this->assertTrue($adapter->fileExists('source.txt'));
+            $this->assertTrue($adapter->fileExists('destination.txt'));
+            /*$this->assertEquals(Visibility::PUBLIC, $adapter->visibility('destination.txt')->visibility());*/
+            $this->assertEquals('contents to be copied', $adapter->read('destination.txt'));
+        });
+    }
+
+    /**
+     * @test
+     * We removed the check of visibility, BunnyCDN bunnyCDN does not support visibility
+     */
+    public function moving_a_file(): void
+    {
+        $this->runScenario(function () {
             $adapter = $this->adapter();
             $adapter->write(
                 'source.txt',
