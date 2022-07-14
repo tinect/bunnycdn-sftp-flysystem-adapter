@@ -42,4 +42,13 @@ class BunnyCDNAdapter extends SftpAdapter
 
         return $this->delete($path);
     }
+
+    /**
+     * While SftpAdapter is ALWAYS setting visiblity there are many errors thrown.
+     * We should just ignore them!
+     */
+    public function setVisibility($path, $visibility): array
+    {
+        return [];
+    }
 }
