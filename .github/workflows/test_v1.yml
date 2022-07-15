@@ -33,8 +33,13 @@ jobs:
         run: composer install -n --prefer-dist
 
       - name: Run unit and functional tests
+        continue-on-error: true
         run: |
           php vendor/bin/phpunit --stop-on-failure
         env:
           STORAGENAME: ${{ secrets.STORAGENAME }}
           APIKEY: ${{ secrets.APIKEY }}
+
+      - name: Run tracert
+        if: ${{ failure() }}
+        run: tracert storage.bunnycdn.com
